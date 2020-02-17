@@ -4,23 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="16dp"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="getWebsite"
         android:text="@string/getButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
-        android:onClick="getWebsite"/>
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@string/editTextText"

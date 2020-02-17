@@ -5,9 +5,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,31 +37,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getWebsite(View view) {
+        hideKeyboard(this);
+        editText.clearFocus();
+
         String url = editText.getText().toString();
         String toastMessage = "Getting URL: " + url;
-        Toast toast = Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT);
-        toast.show();
+        Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 String successMessage = "Request was succeessful";
-                Toast successToast = Toast.makeText(getApplicationContext(), successMessage, Toast.LENGTH_SHORT);
-                successToast.show();
+                Toast.makeText(getApplicationContext(), successMessage, Toast.LENGTH_SHORT).show();
 
                 String content = response.substring(0,1000);
-                Toast responseToast = Toast.makeText(getApplicationContext(), content, Toast.LENGTH_LONG);
-                responseToast.show();
+                Toast.makeText(getApplicationContext(), content, Toast.LENGTH_LONG).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 String errorMessage = "Something bad happened";
-                Toast errorToast = Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT);
-                errorToast.show();
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
 
         requestQueue.add(stringRequest);
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
     }
 }
